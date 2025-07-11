@@ -1,0 +1,238 @@
+/* Charity: water Brand Colors
+
+Primary Colors:
+- Yellow:     #FFC907
+- Blue:       #2E9DF7
+
+Secondary Colors:
+- Light Blue: #8BD1CB
+- Green:      #4FCB53
+- Orange:     #FF902A
+- Red:        #F5402C
+- Dark Green: #159A48
+- Pink:       #F16061
+
+*/
+
+/* Main page styles */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #e6f3f8;
+  /* Use a subtle light blue background for a water feel */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+header {
+  width: 100%;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2E9DF7; /* Main blue */
+  border-bottom: 4px solid #FFC907; /* Bold yellow accent */
+  box-sizing: border-box;
+}
+
+.menu {
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #FFC907; /* Yellow for menu icon */
+  font-weight: bold;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #FFC907; /* Yellow for logo text */
+  letter-spacing: 1px;
+}
+
+.logo::before {
+  content: "\1F4A7";
+  margin-right: 8px;
+  color: #8BD1CB; /* Light blue droplet */
+}
+
+main {
+  max-width: 600px;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.story {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  font-weight: bold;
+  background: #fff;
+  border-left: 6px solid #FFC907;
+  border-radius: 6px;
+  padding: 16px 12px;
+  box-shadow: 0 2px 8px rgba(46,157,247,0.07);
+}
+
+.choice {
+  display: block;
+  width: 100%;
+  max-width: 540px;
+  margin: 10px auto;
+  padding: 15px;
+  background-color: #FFC907; /* Yellow background for choices */
+  border: 2px solid #2E9DF7; /* Blue border */
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s, color 0.3s, border 0.3s;
+  box-sizing: border-box;
+  color: #1a3557; /* Dark blue text for contrast */
+  font-weight: bold;
+  outline: none;
+}
+
+.choice:hover,
+.choice:focus {
+  background-color: #2E9DF7; /* Blue on hover/focus */
+  color: #fff; /* White text for contrast */
+  border: 2px solid #FFC907; /* Yellow border */
+}
+
+.choice.disabled {
+  color: #999;
+  border-color: #ccc;
+  cursor: not-allowed;
+  background: #f5f5f5;
+}
+
+.choice.disabled span {
+  color: #F5402C;
+  display: block;
+  font-size: 0.95rem;
+  margin-top: 4px;
+}
+
+.progress {
+  width: 40%;
+  min-width: 250px;
+  height: 20px;
+  margin: 40px auto 0 auto;
+  border: 2px solid #2E9DF7; /* Blue border */
+  background: none; /* Hide background by default */
+  border-radius: 4px;
+  box-shadow: 0 1px 6px rgba(46,157,247,0.10);
+  position: relative;
+  overflow: hidden;
+}
+
+/* The fill bar inside the progress bar */
+.progress-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background: #2E9DF7; /* Match border color */
+  border-radius: 4px;
+  transition: width 0.6s;
+  z-index: 1;
+}
+
+/* Show 5% fill after first fade out */
+.progress-fill.show {
+  width: 5%;
+}
+
+.game-start-note {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.95rem;
+  font-style: italic;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.story, .choice, .progress {
+  transition: opacity 0.6s;
+  opacity: 1;
+}
+
+/* Fade out: make element transparent */
+.fade-out {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+/* Fade in: make element visible */
+.fade-in {
+  opacity: 1 !important;
+}
+
+/* Make the timer display large and centered */
+.timer-display {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #F5402C;
+  margin: 24px 0 24px 0;
+  text-align: center;
+  display: block;
+}
+
+/* Add extra margin to visually center timer between story and choices */
+.timer-centered {
+  margin-top: 48px;
+  margin-bottom: 48px;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  background: #fff;
+  border: 2px solid #2E9DF7;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(46,157,247,0.15);
+  z-index: 100;
+  min-width: 120px;
+  padding: 8px 0;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-item {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 12px 20px;
+  font-size: 1rem;
+  color: #2E9DF7;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background: #e6f3f8;
+  color: #159A48;
+}
+
+/* Responsive: move menu to right on small screens */
+@media (max-width: 600px) {
+  .dropdown-menu {
+    left: auto;
+    right: 20px;
+    top: 60px;
+    min-width: 100px;
+  }
+}
