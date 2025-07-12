@@ -25,6 +25,7 @@ body {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
+  padding-bottom: 70px; /* Add space at bottom for footer */
 }
 
 header {
@@ -237,6 +238,45 @@ main {
   color: #159A48;
 }
 
+/* Charity: water footer styles */
+.cw-footer {
+  width: 100%;
+  background: #2E9DF7;
+  border-top: 4px solid #FFC907;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 18px 0 12px 0;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 200;
+}
+
+.cw-footer-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #FFC907;
+  font-weight: bold;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  transition: color 0.2s;
+}
+
+.cw-footer-link:hover,
+.cw-footer-link:focus {
+  color: #fff;
+}
+
+.cw-footer-logo {
+  height: 36px;
+  width: auto;
+  margin-right: 12px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 /* Responsive: move menu to right on small screens */
 @media (max-width: 600px) {
   main {
@@ -264,5 +304,12 @@ main {
     right: 20px;
     top: 60px;
     min-width: 100px;
+  }
+  .cw-footer {
+    padding: 10px 0 8px 0;
+  }
+  .cw-footer-logo {
+    height: 28px;
+    margin-right: 8px;
   }
 }
