@@ -104,29 +104,30 @@ const scenes = [
         timerAction: () => nextScene(6) // If timer runs out, run away
     },
     {
-        text: `You let him take it. Maybe he needs it more than you.`,
+        text: `I let him take it. Maybe he needs it more than me.`,
         choices: [
             {
-                label: "Continue",
-                action: () => nextScene(8)
+                label: "I went on my way.",
+                action: () => nextScene(2)
             }
         ]
     },
     {
-        text: `[Unwritten Scene - Will be added later]`,
+        text: `After running what felt like half a mile, I put my hands on my knees to regain my breath.<br><br>
+        "At least... to get through... today..."<br><br>I'll need this.`,
         choices: [
             {
-                label: "Continue",
-                action: () => nextScene(8)
+                label: "I keep my satchel packaged <i>tightly<i> within my bag.",
+                action: () => nextScene(2)
             }
         ]
     },
     {
-        text: `[Unwritten Scene - Will be added later]`,
+        text: `His howl-like cries and (attempt at) persuasion came clear, but all in through one ear and out the other. I didn't understand a bit of what he was trying to say. I think he's some sort of engineer?`,
         choices: [
             {
-                label: "Continue",
-                action: () => nextScene(8)
+                label: "I awkwardly walk away from him.",
+                action: () => nextScene(2)
             }
         ]
     },
