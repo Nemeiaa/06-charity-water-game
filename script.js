@@ -43,20 +43,20 @@ const scenes = [
             }
         ]
     },
-    // New market scene
+    // Market scene (index 2)
     {
-        text: `My feet melt into the gritty sand a little with every step, encroaching into my barefeet sandals slowly. Looking up - blocking the sun with my hand - the hustle and bustle of the market district draws my attention.<br><br>Sighing in my head, I find slight anger at the me a few hours ago thinking finding a water source was just as easy as declaring I was gonna find one for us. What do I even do?`,
+        text: `My feet melt into the gritty sand a little with every step, encroaching into my barefeet sandals slowly. Looking up - blocking the sun with my hand - the hustle and bustle of the market district draws my attention.<br><br>Sighing in my head, I find slight anger at the me a few hours ago thinking finding a good water source was just as easy as declaring I was gonna find one for us. What do I even do?`,
         choices: [
             {
-                label: `"Money's everything, so..." - Ask around for jobs.`,
+                label: `"Money's everything, so..." - Ask around for jobs to afford a filter.`,
                 action: () => {
                     // Fill 20% of progress bar after market scene
                     progressFill.style.width = '20%';
-                    nextScene(8);
+                    nextScene(9);
                 }
             },
             {
-                label: `"If people can build a village, surely..." - Hunt for scraps; if it doesn't exist, then make it.`,
+                label: `"If people can build a village, surely..." - If it doesn't exist, then make it yourself.`,
                 action: () => {
                     // Fill 20% of progress bar after market scene
                     progressFill.style.width = '20%';
@@ -89,7 +89,14 @@ const scenes = [
         choices: [
             {
                 label: "Let him take it.",
-                action: () => nextScene(5)
+                action: () => {
+                    // Remove "water satchel" from inventory if it exists
+                    const index = inventory.indexOf("water satchel");
+                    if (index !== -1) {
+                        inventory.splice(index, 1);
+                    }
+                    nextScene(5);
+                }
             },
             {
                 label: "Run away.",
@@ -117,7 +124,7 @@ const scenes = [
         "At least... to get through... today..."<br><br>I'll need this.`,
         choices: [
             {
-                label: "I keep my satchel packaged <i>tightly<i> within my bag.",
+                label: "I keep my satchel packaged tightly within my bag.",
                 action: () => nextScene(2)
             }
         ]
@@ -132,11 +139,63 @@ const scenes = [
         ]
     },
     {
-        text: `You made it to the end of the game prototype!`,
+        text: `The idea which I found to be a magnum opus soon extinguished its own flame when my thoughts continued to stop at a dead end.<br><br>It was on the verges of giving up when I simply... looked up. Of course. I should've realized it sooner. <br><br>Like a drooling dog that noticed a biscuit on the ground, my eyes traced the construction worker walking past me. Mom and I used to talk to him often. But more than that- knowledge! My walking pace sped up towards the only source of advice I could rely on.`,
         choices: [
             {
-                label: "Restart",
-                action: () => resetGame()
+                label: "I told him about everything.",
+                action: () => nextScene(10) 
+            }
+        ]
+    },
+    // New scene for "Ask around for jobs." (index 10)
+    {
+        text: `You ask around the market for jobs. Most people are busy, but one person offers you a small task in exchange for some coins.`,
+        choices: [
+            {
+                label: "Continue",
+                action: () => nextScene(8) // Continue to scene 8
+            }
+        ]
+    },
+    // New scene after "I told him about everything." (index 10)
+    {
+        text: `He listened attentively, periodic head nods and all, and brought out a pen and paper. Like a robot whose performed the same function hundreds of times, he drew up a quick sketch of directions, places, necessary tools and the materials to make it happen.<br><br>The rising beating of my heart, the desire to get up and move reignited the fire in me.`,
+        choices: [
+            {
+                label: "Time to get to work.",
+                action: () => nextScene(11)
+            }
+        ]
+    },
+    // New scene after index 10 (index 11)
+    {
+        text: `With such a straightforward - and easier than expected - plan, there's no room for failure.<br><br>Which is where failure visited.<br><br>Going to several scrap shops, managing to let a few of them lend some tools, I followed the building instructions at home. I followed them! And nothing. Nothing's working. <i>ughhhhhhhh...</i>`,
+        choices: [
+            {
+                label: "I try looking for the construction worker again.",
+                action: () => {
+                    // Go to a new scene where you find a new helper, only if the player got their water satchel robbed.
+                    nextScene(12);
+                }
+            },
+            {
+                label: `Kick down the contraption you made - let's just try making money.`,
+                action: () => {
+                    // Go to scene 9 (the "Ask around for jobs" scene)
+                    nextScene(9);
+                }
+            }
+        ]
+    },
+    // New scene for seeking the construction worker (index 12)
+    {
+        text: `[Insert scene where you find the homeless guy from the start of the game.]`,
+        choices: [
+            {
+                label: "Explain what's not working.",
+                action: () => {
+                    // Placeholder: continue the story or add more logic here
+                }
             }
         ]
     }
