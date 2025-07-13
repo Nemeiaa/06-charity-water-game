@@ -179,7 +179,7 @@ const scenes = [
                 }
             },
             {
-                label: `Kick down the contraption you made - let's just try making money.`,
+                label: `Kick down the contraption you made - let's just try making money instead.`,
                 action: () => {
                     // Go to scene 9 (the "Ask around for jobs" scene)
                     nextScene(9);
@@ -189,10 +189,23 @@ const scenes = [
     },
     // New scene for seeking the construction worker (index 12)
     {
-        text: `[Insert scene where you find the homeless guy from the start of the game.]`,
+        text: `A slow start to my search soon became a slow middle, and then a slow end when I spent the rest of the day with no luck. Halfway through the search, I realized my mom should have his phone number, and when I went, she... didn't. have it. And I had to go all. the way. back. to the market district. Still to find nothing.<br><br>My sizzling skin disappeared along with the sunset, replaced with the gentle wind flow to pet my skin as if to console me. Sitting on the stairs to an empty lot, I emptily gaze at the blueprint. Despite being a rough draft, it specifies all the right things, and if you had any doubt, there were already sidenotes to clear them.<br><br>You know, I'm not even upset that I couldn't make it. It's that I have such a well crafted plan, not even thought up of by me, made by someone who didn't need to spend that time to help me, and I'm here, with no good news to report back.`,
         choices: [
             {
-                label: "Explain what's not working.",
+                label: `"Excuse me..." - I turn my head up to the man behind me.`,
+                action: () => {
+                    // Go to the next new scene (index 13)
+                    nextScene(13);
+                }
+            }
+        ]
+    },
+    // Follow up to index 12 (index 13)
+    {
+        text: `[Insert scene where you find the man in rugged clothes, who is actually an engineer that could help you.]`,
+        choices: [
+            {
+                label: "Accept his help.",
                 action: () => {
                     // Placeholder: continue the story or add more logic here
                 }
