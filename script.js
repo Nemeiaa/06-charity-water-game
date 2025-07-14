@@ -11,6 +11,7 @@ let inventory = []; // This will hold strings like "water satchel"
 
 // Define the story as an array of scenes
 const scenes = [
+    // Scene 0
     {
         text: `"Erzi... are you really sure?"`,
         choices: [
@@ -23,6 +24,7 @@ const scenes = [
             }
         ]
     },
+    // Scene 1
     {
         text: `Opening the door, I squint my eyes- a sheet of humidity envelops my body as my eyes slowly adjust to the sun.`,
         choices: [
@@ -43,9 +45,9 @@ const scenes = [
             }
         ]
     },
-    // Market scene (index 2)
+    // Scene 2 - Market scene
     {
-        text: `My feet melt into the gritty sand a little with every step, encroaching into my barefeet sandals slowly. Looking up - blocking the sun with my hand - the hustle and bustle of the market district draws my attention.<br><br>Sighing in my head, I find slight anger at the me a few hours ago thinking finding a good water source was just as easy as declaring I was gonna find one for us. What do I even do?`,
+        text: `My feet sink into the gritty sand a little with every step, encroaching into my barefeet sandals slowly. Looking up - blocking the sun with my hand - the hustle and bustle of the market district draws my attention.<br><br>Sighing in my head, I find slight anger at the me a few hours ago thinking finding a good water source was just as easy as declaring I was gonna find one for us. What do I even do?`,
         choices: [
             {
                 label: `"Money's everything, so..." - Ask around for jobs to afford a filter.`,
@@ -65,7 +67,7 @@ const scenes = [
             }
         ]
     },
-    // Satchel scene (now index 3)
+    // Scene 3 - Satchel scene
     {
         text: `I go back inside, a sense of forgetfulness I dispel going into my room. I grab my water satchel, knowing I need it to stay hydrated in this heat.`,
         choices: [
@@ -79,6 +81,7 @@ const scenes = [
             }
         ]
     },
+    // Scene 4 - Timer scene
     {
         // Timer scene
         text: `
@@ -95,6 +98,10 @@ const scenes = [
                     if (index !== -1) {
                         inventory.splice(index, 1);
                     }
+                    // Add "Ending A Key" to inventory
+                    if (!inventory.includes("Ending A Key")) {
+                        inventory.push("Ending A Key");
+                    }
                     nextScene(5);
                 }
             },
@@ -110,6 +117,7 @@ const scenes = [
         timer: 7, // seconds
         timerAction: () => nextScene(6) // If timer runs out, run away
     },
+    // Scene 5
     {
         text: `I let him take it. Maybe he needs it more than me.`,
         choices: [
@@ -119,6 +127,7 @@ const scenes = [
             }
         ]
     },
+    // Scene 6
     {
         text: `After running what felt like half a mile, I put my hands on my knees to regain my breath.<br><br>
         "At least... to get through... today..."<br><br>I'll need this.`,
@@ -129,6 +138,7 @@ const scenes = [
             }
         ]
     },
+    // Scene 7
     {
         text: `His howl-like cries and (attempt at) persuasion came clear, but all in through one ear and out the other. I didn't understand a bit of what he was trying to say. I think he's some sort of engineer?`,
         choices: [
@@ -138,6 +148,7 @@ const scenes = [
             }
         ]
     },
+    // Scene 8
     {
         text: `The idea which I found to be a magnum opus soon extinguished its own flame when my thoughts continued to stop at a dead end.<br><br>It was on the verges of giving up when I simply... looked up. Of course. I should've realized it sooner. <br><br>Like a drooling dog that noticed a biscuit on the ground, my eyes traced the construction worker walking past me. Mom and I used to talk to him often. But more than that- knowledge! My walking pace sped up towards the only source of advice I could rely on.`,
         choices: [
@@ -147,17 +158,21 @@ const scenes = [
             }
         ]
     },
-    // New scene for "Ask around for jobs." (index 10)
+    // Scene 9 - "Ask around for jobs." scene
     {
-        text: `You ask around the market for jobs. Most people are busy, but one person offers you a small task in exchange for some coins.`,
+        text: `I asked around for jobs. To my luck, there were two places looking for part-time work:`,
         choices: [
             {
-                label: "Continue",
-                action: () => nextScene(8) // Continue to scene 8
+                label: "Nursery - sounds fun.",
+                action: () => nextScene(14) // Go to new nursery job scene
+            },
+            {
+                label: "Tech shop - 'wonder what work I'd even do here.",
+                action: () => nextScene(15) // Go to new tech shop job scene
             }
         ]
     },
-    // New scene after "I told him about everything." (index 10)
+    // Scene 10 - After "I told him about everything."
     {
         text: `He listened attentively, periodic head nods and all, and brought out a pen and paper. Like a robot whose performed the same function hundreds of times, he drew up a quick sketch of directions, places, necessary tools and the materials to make it happen.<br><br>The rising beating of my heart, the desire to get up and move reignited the fire in me.`,
         choices: [
@@ -167,27 +182,27 @@ const scenes = [
             }
         ]
     },
-    // New scene after index 10 (index 11)
+    // Scene 11
     {
         text: `With such a straightforward - and easier than expected - plan, there's no room for failure.<br><br>Which is where failure visited.<br><br>Going to several scrap shops, managing to let a few of them lend some tools, I followed the building instructions at home. I followed them! And nothing. Nothing's working. <i>ughhhhhhhh...</i>`,
         choices: [
             {
                 label: "I try looking for the construction worker again.",
+                // Lock this option if the player does not have "Ending A Key"
+                locked: () => !inventory.includes("Ending A Key"),
                 action: () => {
-                    // Go to a new scene where you find a new helper, only if the player got their water satchel robbed.
                     nextScene(12);
                 }
             },
             {
                 label: `Kick down the contraption you made - let's just try making money instead.`,
                 action: () => {
-                    // Go to scene 9 (the "Ask around for jobs" scene)
                     nextScene(9);
                 }
             }
         ]
     },
-    // New scene for seeking the construction worker (index 12)
+    // Scene 12 - Seeking the construction worker
     {
         text: `A slow start to my search soon became a slow middle, and then a slow end when I spent the rest of the day with no luck. Halfway through the search, I realized my mom should have his phone number, and when I went, she... didn't. have it. And I had to go all. the way. back. to the market district. Still to find nothing.<br><br>My sizzling skin disappeared along with the sunset, replaced with the gentle wind flow to pet my skin as if to console me. Sitting on the stairs to an empty lot, I emptily gaze at the blueprint. Despite being a rough draft, it specifies all the right things, and if you had any doubt, there were already sidenotes to clear them.<br><br>You know, I'm not even upset that I couldn't make it. It's that I have such a well crafted plan, not even thought up of by me, made by someone who didn't need to spend that time to help me, and I'm here, with no good news to report back.`,
         choices: [
@@ -200,14 +215,127 @@ const scenes = [
             }
         ]
     },
-    // Follow up to index 12 (index 13)
+    // Scene 13 - Follow up to index 12
     {
-        text: `[Insert scene where you find the man in rugged clothes, who is actually an engineer that could help you.]`,
+        text: `To my surprise, a homeless came up to me, seeming to point at my blueprint. Wait.<br><br>Now that I get a good look at him, it's the same guy who took my satchel! Before I even take the time to look at his face, I spring up from the stairs I was sat and took a few steps back.<br><br>Even with rugged clothes, I can tell his complexion got a bit better. I guess the satchel did someth- okay, not the time to be thinking about that!<br><br>"What do you want!?"<br><br>And that's when he apologized and thanked me for the water, and explained. His experience as an engineer. That he has people to help too. That just like us all, he was unsatisfied with letting himself and those he love rot away without doing something about it. But in the reaches of a dead end, his health gave, and I happened to come across that this morning.<br><br>In a way, we seemed to be quite alike. His ambitions were definitely more grand than mine though.<br><br>His hand reaches out to me, promising to help me.`,
         choices: [
             {
-                label: "Accept his help.",
+                label: "I shake his hand.",
                 action: () => {
-                    // Placeholder: continue the story or add more logic here
+                    // Add Ending A Completed to inventory
+                    if (!inventory.includes("Ending A Completed")) {
+                        inventory.push("Ending A Completed");
+                    }
+                    nextScene(20);
+                }
+            }
+        ]
+    },
+    // Scene 14 - Nursery job
+    {
+        text: `...Thank you Ma.<br><br>I reflect on my own caretaker as I face the reality of what it's like to be one for work. But even then, my cheek muscles can't help curving in this unexplainable mix of happiness, love, and a bit of pride. If watching growth feels like this, I can't wait to have a kid myself.<br><br>Gently waving goodbye to a kid holding the hand of her parent, in the corner of my eye is another kid, whining to his parents. When I thought the parents were on the older side, I noticed my misunderstanding when I got a better look at them- they were just so thin I thought otherwise.<br><br>The parents seemed to almost be holding back tears as the kid beat on the back of the dad. The topic of discussion was drink- specifically, the lack thereof. I:`,
+        choices: [
+            {
+                label: "Walk up to the family.",
+                locked: () => !inventory.includes("water satchel"),
+                action: () => nextScene(16)
+            },
+            {
+                label: "Pray for their health.",
+                action: () => nextScene(17)
+            }
+        ]
+    },
+    // Scene 15 - Tech shop job
+    {
+        text: `Starting work at a tech shop was not something I expected myself to be doing, but here I am.<br><br>The name "tech shop" made me think of working somewhere a bit more... cooler than I thought, but it felt more like a tiny little repair shop. Most of the customers were looking to trade anything for anything, or repair what they had. Almost no one came in looking to buy something from here. And for some reason, grandmas and grandpas looking for help on their cell phone troubles came in droves. My coworker was ignoring them all, so I went and helped them. (I don't know much tech but I'm at least confident enough for THIS...)<br><br>I turned to my coworker right after handing a phone back to a satisfied grandma.`,
+        choices: [
+            {
+                label: `"Hey, why don't you come and help too?"`,
+                action: () => nextScene(19)
+            }
+        ]
+    },
+    // Scene 16 - Walk up to the family
+    {
+        text: `With a strange sense of filial piety moving me forward despite not having any kids of my own, the family gave me a look of confusion when I suddenly stopped in front of them- well, to be specific, the kid. I crouched down, and started shuffling through my bag. Found it.<br><br>I handed him the water satchel, and only was able to notice because we were this close now how cracked and dry his lips were. His parents were silently watching the situation unfold.<br><br>I couldn't tell what was on his mind, but he paused, and the instant his eyes went wide-open, the satchel was swiftly gone from my hand. And before I knew it, he was chugging it.<br><br>Don't worry little guy, no one's gonna take this from you.`,
+        choices: [
+            {
+                label: "Well, back to work.",
+                action: () => {
+                    // Remove water satchel from inventory if present
+                    const index = inventory.indexOf("water satchel");
+                    if (index !== -1) {
+                        inventory.splice(index, 1);
+                    }
+                    nextScene(18);
+                }
+            }
+        ]
+    },
+    // Scene 17 - Pray for their health
+    {
+        text: `The door to the nursery closes, and a luggage of weight lifts off my shoulders along with a long exhalation. I came in knowing the job would only be for today, but at the same level as my relief, a nonexistant weight tugged at my heart, which I hope would heal after a good nights rest.<br><br>"I wonder if that tech shop's still offering work..." `,
+        choices: [
+            {
+                label: "Sleep, looking forward to starting work at the tech shop (hopefully.)",
+                action: () => nextScene(15)
+            }
+        ]
+    },
+    // Scene 18 - After helping the family
+    {
+        text: `If making money was this easy I should've been doing this a loooong time ago. I don't know why, but the manager (and.. the entire staff?) seemed to really like me, so I got to keep working here. I really like the work too so that's a win-win. Seeing the kids getting just one more question right than they did yesterday, something about that is so incredible, even though I know its obvious.<br><br>Anyways, time to tell Ma the good news!`,
+        choices: [
+            {
+                label: "I go home- ah, I don't think this smile is gonna come off my face.",
+                action: () => {
+                    // Add Ending B Completed to inventory
+                    if (!inventory.includes("Ending B Completed")) {
+                        inventory.push("Ending B Completed");
+                    }
+                    nextScene(20);
+                }
+            }
+        ]
+    },
+    // Scene 19 - After tech shop job
+    {
+        text: `Luckily, I got to keep working here. I don't really like the guy I work with... but anything to get enough money. It wasn't the part-time I dreamed of, but I made a whole lot of (older) friends, who keep the work plentiful and the shift-time quick even when the shop is dead.<br><br>It's been months since I started this job, and soon, I'll get my next paycheck. I already called my mom's friend, and he's coming to build the water source, full payment upfront of course. Why he... or any other construction business won't allow payments over time is over my head, but we can finally get things moving now.`,
+        choices: [
+            {
+                label: "I walk back home, paycheck clenched in my hand.",
+                action: () => {
+                    // Add Ending C Completed to inventory
+                    if (!inventory.includes("Ending C Completed")) {
+                        inventory.push("Ending C Completed");
+                    }
+                    nextScene(20);
+                }
+            }
+        ]
+    },
+    // Scene 20 - End scene
+    {
+        text: `You reached the end! Thank you for playing.<br><br>
+        If you want to donate to help with charity: water's mission to bring healthy water to all, click on the link below:<br>
+        <a href="https://www.charitywater.org/?utm_source=adwords&utm_medium=paid-ppc&utm_campaign=donor-acq-usrow&utm_term=cBC_CW_G_PAID_PMAX_ALL_US+ROW_EVERGREEN&utm_content=performance_max&gad_source=1&gad_campaignid=21335452962&gbraid=0AAAAADNj5D_OWZn5WbWJhuOCS1DYKKOeZ&gclid=CjwKCAjwg7PDBhBxEiwAf1CVu16YPADyuJSLJfeNP_eXj6sH2y-NSGrdEZwAAJKHpaTPLZ9hBepOYxoC4GoQAvD_BwE" target="_blank" rel="noopener">charity: water - Donate</a>`,
+        choices: [
+            {
+                label: "Start from the beginning",
+                action: () => {
+                    // Remove "Ending A Key" and "water satchel" from inventory if present
+                    const endingAIndex = inventory.indexOf("Ending A Key");
+                    if (endingAIndex !== -1) {
+                        inventory.splice(endingAIndex, 1);
+                    }
+                    const satchelIndex = inventory.indexOf("water satchel");
+                    if (satchelIndex !== -1) {
+                        inventory.splice(satchelIndex, 1);
+                    }
+                    // Optionally remove all "Ending X Completed" keys if you want a clean restart:
+                    // inventory = [];
+                    resetGame();
                 }
             }
         ]
@@ -266,6 +394,15 @@ function showScene(index) {
         if (btn !== choiceBtn) btn.remove();
     });
 
+    // --- FIX: Always enable and clean up the template button before use ---
+    // This prevents locked/disabled state from sticking after scene 11 or reset
+    choiceBtn.disabled = false;
+    choiceBtn.classList.remove('disabled');
+    // Remove any "(LOCKED)" spans from previous uses
+    while (choiceBtn.firstChild) {
+        choiceBtn.removeChild(choiceBtn.firstChild);
+    }
+
     // Hide the template button for multi-choice scenes
     choiceBtn.style.display = 'none';
 
@@ -273,7 +410,6 @@ function showScene(index) {
     scene.choices.forEach((choice, i) => {
         let btn;
         if (i === 0) {
-            // Use the template button for the first choice
             btn = choiceBtn;
             btn.style.display = '';
         } else {
@@ -281,29 +417,42 @@ function showScene(index) {
             btn.className = 'choice';
             progressBar.parentNode.insertBefore(btn, progressBar);
         }
+        // --- FIX: Always enable and clean up each button before checking for locked state ---
+        btn.disabled = false;
+        btn.classList.remove('disabled');
+        // Remove any "(LOCKED)" spans from previous uses
+        while (btn.firstChild) {
+            btn.removeChild(btn.firstChild);
+        }
         btn.textContent = choice.label;
-        // Remove previous click listeners by cloning
-        const newBtn = btn.cloneNode(true);
-        btn.parentNode.replaceChild(newBtn, btn);
-        // Add click event with fade-out/fade-in animation
-        newBtn.addEventListener('click', () => {
-            // For debugging: log inventory
-            // console.log('Inventory:', inventory);
-            // Fade out story, all choices, and progress bar before changing scene
-            const allChoices = Array.from(document.querySelectorAll('.choice'));
-            fadeOutElements([storyDiv, ...allChoices, progressBar], () => {
-                // After fade out, perform the choice action (which calls nextScene or similar)
-                choice.action();
-                // Fade in new scene elements
-                // Use setTimeout to ensure DOM updates before fade in
-                setTimeout(() => {
-                    const newChoices = Array.from(document.querySelectorAll('.choice'));
-                    fadeInElements([storyDiv, ...newChoices, progressBar]);
-                }, 10);
+        // Check if this choice should be locked (disabled)
+        if (typeof choice.locked === 'function' && choice.locked()) {
+            btn.disabled = true;
+            btn.classList.add('disabled');
+            // Add a message to explain why it's locked
+            const lockMsg = document.createElement('span');
+            lockMsg.textContent = "(LOCKED)";
+            btn.appendChild(lockMsg);
+        } else {
+            // Remove previous click listeners by cloning
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            // Add click event with fade-out/fade-in animation
+            newBtn.addEventListener('click', () => {
+                // For debugging: log inventory
+                // console.log('Inventory:', inventory);
+                // Fade out story, all choices, and progress bar before changing scene
+                const allChoices = Array.from(document.querySelectorAll('.choice'));
+                fadeOutElements([storyDiv, ...allChoices, progressBar], () => {
+                    choice.action();
+                    setTimeout(() => {
+                        const newChoices = Array.from(document.querySelectorAll('.choice'));
+                        fadeInElements([storyDiv, ...newChoices, progressBar]);
+                    }, 10);
+                });
             });
-        });
-        // If first choice, update reference
-        if (i === 0) choiceBtn = newBtn;
+            if (i === 0) choiceBtn = newBtn;
+        }
     });
 
     // Handle timer if present
@@ -351,8 +500,8 @@ function nextScene(forcedIndex) {
 function resetGame() {
     // Hide dropdown
     dropdownMenu.classList.remove('show');
-    // Clear inventory and progress
-    inventory = [];
+    // Remove only "water satchel" and "Ending A Key" from inventory
+    inventory = inventory.filter(item => item !== "water satchel" && item !== "Ending A Key");
     progressFill.classList.remove('show');
     progressFill.style.width = '0%'; // Reset progress bar fill
     // Remove any special classes from storyDiv
