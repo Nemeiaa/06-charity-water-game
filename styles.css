@@ -238,6 +238,37 @@ main {
   color: #159A48;
 }
 
+.reset-btn,
+.easy-mode-btn {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 12px 20px;
+  font-size: 1rem;
+  color: #2E9DF7;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s, color 0.2s;
+  border-radius: 0;
+  outline: none;
+  display: block;
+}
+
+.reset-btn:hover,
+.reset-btn:focus,
+.easy-mode-btn:hover,
+.easy-mode-btn:focus {
+  background: #e6f3f8;
+  color: #159A48;
+}
+
+/* When easy mode is active, highlight the button in green */
+.easy-mode-btn.active {
+  background: #4FCB53 !important;
+  color: #fff !important;
+}
+
 /* Charity: water footer styles */
 .cw-footer {
   width: 100%;

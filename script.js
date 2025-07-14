@@ -47,21 +47,21 @@ const scenes = [
     },
     // Scene 2 - Market scene
     {
-        text: `My feet sink into the gritty sand a little with every step, encroaching into my barefeet sandals slowly. Looking up - blocking the sun with my hand - the hustle and bustle of the market district draws my attention.<br><br>Sighing in my head, I find slight anger at the me a few hours ago thinking finding a good water source was just as easy as declaring I was gonna find one for us. What do I even do?`,
+        text: `My feet grate against the gritty sand that encroaches into my sandals slowly with every step. Looking up - blocking the sun with my hand - the hustle and bustle of the market district draws my attention.<br><br>Sighing in my head, I find slight anger at the me a few hours ago thinking finding a good water source was just as easy as declaring I was gonna find one for us. What do I even do?`,
         choices: [
             {
                 label: `"Money's everything, so..." - Ask around for jobs to afford a filter.`,
                 action: () => {
-                    // Fill 20% of progress bar after market scene
-                    progressFill.style.width = '20%';
+                    // Fill 33% of progress bar after market scene
+                    progressFill.style.width = '33%';
                     nextScene(9);
                 }
             },
             {
                 label: `"If people can build a village, surely..." - If it doesn't exist, then make it yourself.`,
                 action: () => {
-                    // Fill 20% of progress bar after market scene
-                    progressFill.style.width = '20%';
+                    // Fill 33% of progress bar after market scene
+                    progressFill.style.width = '33%';
                     nextScene(8);
                 }
             }
@@ -74,8 +74,8 @@ const scenes = [
             {
                 label: 'Step outside again.',
                 action: () => {
-                    // Fill 20% of progress bar after satchel scene
-                    progressFill.style.width = '20%';
+                    // Fill 33% of progress bar after satchel scene
+                    progressFill.style.width = '33%';
                     nextScene(4);
                 }
             }
@@ -164,11 +164,17 @@ const scenes = [
         choices: [
             {
                 label: "Nursery - sounds fun.",
-                action: () => nextScene(14) // Go to new nursery job scene
+                action: () => {
+                    progressFill.style.width = '66%';
+                    nextScene(14);
+                }
             },
             {
                 label: "Tech shop - 'wonder what work I'd even do here.",
-                action: () => nextScene(15) // Go to new tech shop job scene
+                action: () => {
+                    progressFill.style.width = '66%';
+                    nextScene(15);
+                }
             }
         ]
     },
@@ -191,12 +197,14 @@ const scenes = [
                 // Lock this option if the player does not have "Ending A Key"
                 locked: () => !inventory.includes("Ending A Key"),
                 action: () => {
+                    progressFill.style.width = '66%';
                     nextScene(12);
                 }
             },
             {
                 label: `Kick down the contraption you made - let's just try making money instead.`,
                 action: () => {
+                    progressFill.style.width = '66%';
                     nextScene(9);
                 }
             }
@@ -222,6 +230,7 @@ const scenes = [
             {
                 label: "I shake his hand.",
                 action: () => {
+                    progressFill.style.width = '100%';
                     // Add Ending A Completed to inventory
                     if (!inventory.includes("Ending A Completed")) {
                         inventory.push("Ending A Completed");
@@ -233,7 +242,7 @@ const scenes = [
     },
     // Scene 14 - Nursery job
     {
-        text: `...Thank you Ma.<br><br>I reflect on my own caretaker as I face the reality of what it's like to be one for work. But even then, my cheek muscles can't help curving in this unexplainable mix of happiness, love, and a bit of pride. If watching growth feels like this, I can't wait to have a kid myself.<br><br>Gently waving goodbye to a kid holding the hand of her parent, in the corner of my eye is another kid, whining to his parents. When I thought the parents were on the older side, I noticed my misunderstanding when I got a better look at them- they were just so thin I thought otherwise.<br><br>The parents seemed to almost be holding back tears as the kid beat on the back of the dad. The topic of discussion was drink- specifically, the lack thereof. I:`,
+        text: `...Thank you Ma.<br><br>I reflect on my own caretaker as I face the reality of what it's like to be one for work. But even then, my cheek muscles can't help curling in this unexplainable mix of happiness, love, and a bit of pride. If watching growth feels like this, I can't wait to have a kid myself.<br><br>Gently waving goodbye to a kid holding the hand of her parent, in the corner of my eye is another kid, whining to his parents. When I thought the parents were on the older side, I noticed my misunderstanding when I got a better look at them- they were just so thin I thought otherwise.<br><br>The parents seemed to almost be holding back tears as the kid beat on the back of the dad. The topic of discussion was drink- specifically, the lack thereof. I:`,
         choices: [
             {
                 label: "Walk up to the family.",
@@ -290,6 +299,7 @@ const scenes = [
             {
                 label: "I go home- ah, I don't think this smile is gonna come off my face.",
                 action: () => {
+                    progressFill.style.width = '100%';
                     // Add Ending B Completed to inventory
                     if (!inventory.includes("Ending B Completed")) {
                         inventory.push("Ending B Completed");
@@ -306,6 +316,7 @@ const scenes = [
             {
                 label: "I walk back home, paycheck clenched in my hand.",
                 action: () => {
+                    progressFill.style.width = '100%';
                     // Add Ending C Completed to inventory
                     if (!inventory.includes("Ending C Completed")) {
                         inventory.push("Ending C Completed");
@@ -347,6 +358,35 @@ let currentScene = 0;
 let timerId = null;
 let intervalId = null;
 
+// Easy/Hint Mode state
+let easyMode = false;
+
+// Function to update menu highlight for easy mode
+function updateEasyModeHighlight() {
+    // Highlight the menu section if easy mode is on
+    if (easyMode) {
+        easyModeBtn.classList.add("active");
+    } else {
+        easyModeBtn.classList.remove("active");
+    }
+}
+
+// Add Easy/Hint Mode button to the menu
+const easyModeBtn = document.createElement('button');
+easyModeBtn.textContent = "Easy/Hint Mode";
+easyModeBtn.className = "easy-mode-btn";
+
+// --- FIX: Insert Easy/Hint Mode button into the dropdown menu, not after resetBtn (which is outside the dropdown) ---
+const dropdownMenu = document.querySelector('.dropdown-menu');
+dropdownMenu.appendChild(easyModeBtn);
+
+easyModeBtn.addEventListener('click', function() {
+    easyMode = !easyMode;
+    updateEasyModeHighlight();
+    // Refresh the current scene to apply/remove hints and timer
+    showScene(currentScene);
+});
+
 // Helper function to fade in elements (for beginners, just show them)
 function fadeInElements(elements) {
     elements.forEach(el => {
@@ -384,10 +424,20 @@ function showScene(index) {
     storyDiv.classList.remove('story-small-border');
 
     currentScene = index;
-    const scene = scenes[index];
+    let scene = scenes[index];
+
+    // --- EASY MODE: Remove timer from scene 4 if enabled ---
+    let sceneCopy = { ...scene };
+    let storyHtml = sceneCopy.text;
+    if (easyMode && index === 4) {
+        // Remove timer and timerAction for this scene only
+        sceneCopy = { ...scene, timer: undefined, timerAction: undefined };
+        // Remove the timer display HTML from the story text using a simple replace
+        storyHtml = sceneCopy.text.replace(/<div class="timer-display[^>]*">.*?<\/div>/, "");
+    }
 
     // Show the story text (use innerHTML for formatting)
-    storyDiv.innerHTML = scene.text;
+    storyDiv.innerHTML = storyHtml;
 
     // Remove all choice buttons except the template one
     document.querySelectorAll('.choice').forEach(btn => {
@@ -395,19 +445,16 @@ function showScene(index) {
     });
 
     // --- FIX: Always enable and clean up the template button before use ---
-    // This prevents locked/disabled state from sticking after scene 11 or reset
     choiceBtn.disabled = false;
     choiceBtn.classList.remove('disabled');
-    // Remove any "(LOCKED)" spans from previous uses
     while (choiceBtn.firstChild) {
         choiceBtn.removeChild(choiceBtn.firstChild);
     }
 
-    // Hide the template button for multi-choice scenes
     choiceBtn.style.display = 'none';
 
     // Add choice buttons
-    scene.choices.forEach((choice, i) => {
+    sceneCopy.choices.forEach((choice, i) => {
         let btn;
         if (i === 0) {
             btn = choiceBtn;
@@ -417,19 +464,47 @@ function showScene(index) {
             btn.className = 'choice';
             progressBar.parentNode.insertBefore(btn, progressBar);
         }
-        // --- FIX: Always enable and clean up each button before checking for locked state ---
         btn.disabled = false;
         btn.classList.remove('disabled');
-        // Remove any "(LOCKED)" spans from previous uses
         while (btn.firstChild) {
             btn.removeChild(btn.firstChild);
         }
         btn.textContent = choice.label;
+
+        // --- EASY MODE: Add yellow hint text for specific choices ONLY IF LOCKED ---
+        // Scene 14, choice 1
+        if (
+            easyMode &&
+            index === 14 &&
+            i === 0 &&
+            typeof choice.locked === 'function' &&
+            choice.locked()
+        ) {
+            const hint = document.createElement('span');
+            hint.textContent = " (Requires Erzi to have a water satchel.)";
+            hint.style.color = "#FFC907";
+            hint.style.marginLeft = "6px";
+            btn.appendChild(hint);
+        }
+        // Scene 11, choice 1
+        if (
+            easyMode &&
+            index === 11 &&
+            i === 0 &&
+            typeof choice.locked === 'function' &&
+            choice.locked()
+        ) {
+            const hint = document.createElement('span');
+            hint.textContent = " (Requires Erzi's water satchel to be stolen by the man in rugged clothing)";
+            hint.style.color = "#FFC907";
+            hint.style.marginLeft = "6px";
+            btn.appendChild(hint);
+        }
+
         // Check if this choice should be locked (disabled)
         if (typeof choice.locked === 'function' && choice.locked()) {
             btn.disabled = true;
             btn.classList.add('disabled');
-            // Add a message to explain why it's locked
             const lockMsg = document.createElement('span');
             lockMsg.textContent = "(LOCKED)";
             btn.appendChild(lockMsg);
@@ -437,11 +512,9 @@ function showScene(index) {
             // Remove previous click listeners by cloning
             const newBtn = btn.cloneNode(true);
             btn.parentNode.replaceChild(newBtn, btn);
-            // Add click event with fade-out/fade-in animation
             newBtn.addEventListener('click', () => {
                 // For debugging: log inventory
                 // console.log('Inventory:', inventory);
-                // Fade out story, all choices, and progress bar before changing scene
                 const allChoices = Array.from(document.querySelectorAll('.choice'));
                 fadeOutElements([storyDiv, ...allChoices, progressBar], () => {
                     choice.action();
@@ -455,10 +528,10 @@ function showScene(index) {
         }
     });
 
-    // Handle timer if present
-    if (scene.timer) {
+    // --- EASY MODE: Don't run timer for scene 4 if easyMode is on ---
+    if (sceneCopy.timer && !(easyMode && index === 4)) {
         const timerDisplay = storyDiv.querySelector('.timer-display');
-        let timeLeft = scene.timer;
+        let timeLeft = sceneCopy.timer;
         if (timerDisplay) {
             timerDisplay.textContent = `Time left: ${timeLeft}`;
             intervalId = setInterval(() => {
@@ -470,19 +543,17 @@ function showScene(index) {
             }, 1000);
         }
         timerId = setTimeout(() => {
-            // Fade out story, all choices, and progress bar before timer action
             const allChoices = Array.from(document.querySelectorAll('.choice'));
             fadeOutElements([storyDiv, ...allChoices, progressBar], () => {
-                if (typeof scene.timerAction === 'function') {
-                    scene.timerAction();
-                    // Fade in new scene elements after timer action
+                if (typeof sceneCopy.timerAction === 'function') {
+                    sceneCopy.timerAction();
                     setTimeout(() => {
                         const newChoices = Array.from(document.querySelectorAll('.choice'));
                         fadeInElements([storyDiv, ...newChoices, progressBar]);
                     }, 10);
                 }
             });
-        }, scene.timer * 1000);
+        }, sceneCopy.timer * 1000);
     }
 }
 
@@ -512,7 +583,7 @@ function resetGame() {
 
 // Dropdown menu logic
 const menuBtn = document.querySelector('.menu');
-const dropdownMenu = document.querySelector('.dropdown-menu');
+// const dropdownMenu = document.querySelector('.dropdown-menu'); // already declared above
 const resetBtn = document.querySelector('.reset-btn');
 
 menuBtn.addEventListener('click', function() {
@@ -527,13 +598,7 @@ resetBtn.addEventListener('click', resetGame);
 
 // On page load, show the first scene
 showScene(0);
-// Add (GAME START) note to the first button if missing
-if (!choiceBtn.querySelector('.game-start-note')) {
-    const note = document.createElement('span');
-    note.className = 'game-start-note';
-    note.textContent = '(GAME START)';
-    choiceBtn.appendChild(note);
-}
+// Remove (GAME START) note logic
 fadeInElements([storyDiv, choiceBtn, progressBar]);
 document.addEventListener('click', function(e) {
     if (!menuBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
@@ -554,13 +619,7 @@ resetBtn.addEventListener('click', function() {
     // Restore initial story and button
     storyDiv.innerHTML = `"Erzi... are you really sure?"`;
     choiceBtn.textContent = 'You know the answer, Ma.';
-    // Restore the game start note if missing
-    if (!choiceBtn.querySelector('.game-start-note')) {
-        const note = document.createElement('span');
-        note.className = 'game-start-note';
-        note.textContent = '(GAME START)';
-        choiceBtn.appendChild(note);
-    }
+    // Remove (GAME START) note logic
     choiceBtn.style.display = '';
     // Remove any extra buttons
     document.querySelectorAll('.choice').forEach(btn => {
