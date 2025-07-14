@@ -85,7 +85,7 @@ const scenes = [
     {
         // Timer scene
         text: `
-            <div class="timer-display timer-centered">Time left: 7</div>
+            <div class="timer-display timer-centered">Time left: 10</div>
             At the entrance to the market district, a man in a ripped t-shirt and jeans reaches for my sachel.<br><br>
             I: 
         `,
@@ -114,7 +114,7 @@ const scenes = [
                 action: () => nextScene(7)
             }
         ],
-        timer: 7, // seconds
+        timer: 10, // seconds
         timerAction: () => nextScene(6) // If timer runs out, run away
     },
     // Scene 5
@@ -531,7 +531,7 @@ function showScene(index) {
     // --- EASY MODE: Don't run timer for scene 4 if easyMode is on ---
     if (sceneCopy.timer && !(easyMode && index === 4)) {
         const timerDisplay = storyDiv.querySelector('.timer-display');
-        let timeLeft = sceneCopy.timer;
+        let timeLeft = sceneCopy.timer; // This will now be 10
         if (timerDisplay) {
             timerDisplay.textContent = `Time left: ${timeLeft}`;
             intervalId = setInterval(() => {
@@ -553,7 +553,7 @@ function showScene(index) {
                     }, 10);
                 }
             });
-        }, sceneCopy.timer * 1000);
+        }, sceneCopy.timer * 1000); // This will now be 10 * 1000
     }
 }
 
